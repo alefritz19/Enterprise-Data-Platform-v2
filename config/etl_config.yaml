@@ -1,0 +1,37 @@
+# ETL-Pipeline Konfiguration
+
+source:
+  path: data/raw                # Verzeichnis für neue CSV-Dateien
+  pattern: "*.csv"              # Dateimuster
+  encoding: utf-8               # Zeichenkodierung
+  separator: ","                # CSV-Trennzeichen (Komma oder Semikolon)
+  archive_processed: true       # Verarbeitete Dateien archivieren
+  processed_path: data/processed
+  error_path: data/errors
+
+transformations:
+  date_formats:                 # Datumsformate (werden der Reihe nach probiert)
+    - "%d.%m.%Y"                # 23.02.2024
+    - "%Y-%m-%d"                # 2024-02-23
+    - "%d/%m/%Y"                # 23/02/2024
+    - "%m/%d/%Y"                # 02/23/2024
+  decimal_separator: ","        # Deutsches Komma (1.234,56 → 1234.56)
+  required_columns:             # Pflichtfelder – Zeilen ohne diese werden verworfen
+    - order_date
+    - customer
+    - product
+    - amount
+
+target:
+  schema: staging
+  table: sales_clean
+  strategy: append              # append | replace | upsert
+
+ml:
+  min_rows_for_forecast: 30    # Mindest-Datenmenge für ML-Prognose
+  forecast_days: 30            # Prognose-Horizont in Tagen
+  anomaly_threshold: 0.20      # Abweichung > 20% → Anomalie
+
+schedule:
+  etl_interval_minutes: 60     # ETL alle 60 Minuten
+  daily_report_time: "08:00"   # Tagesbericht um 08:00 Uhr

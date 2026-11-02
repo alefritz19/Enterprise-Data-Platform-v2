@@ -1,0 +1,31 @@
+# ENTERPRISE DATA PLATFORM v2.0 – Python-Abhängigkeiten
+# Installation: pip install -r requirements.txt
+
+# ── Datenbank & ORM ──────────────────────────────────────
+psycopg2-binary>=2.9.9
+sqlalchemy>=2.0.30
+tenacity>=8.3.0
+
+# ── Datenverarbeitung ────────────────────────────────────
+pandas>=2.2.2
+numpy>=1.26.4
+python-dateutil>=2.9.0
+
+# ── Machine Learning & Forecasting ───────────────────────
+xgboost>=2.0.3
+scikit-learn>=1.5.0
+
+# ── Interaktives BI Dashboard & Visualisierung ───────────
+streamlit>=1.38.0
+plotly>=5.22.0
+matplotlib>=3.9.0
+
+# ── Benachrichtigungen & APIs (Optional) ─────────────────
+python-telegram-bot>=21.3
+msal>=1.29.0
+requests>=2.32.3
+
+# ── Konfiguration & Scheduling ───────────────────────────
+python-dotenv>=1.0.1
+pyyaml>=6.0.1
+schedule>=1.2.2

@@ -1,0 +1,14 @@
+# PostgreSQL Verbindungs-Konfiguration
+# Werte werden aus .env geladen (${VAR})
+
+host: "${DB_HOST}"
+port: ${DB_PORT}
+database: "${DB_NAME}"
+user: "${DB_USER}"
+password: "${DB_PASSWORD}"
+
+# Connection Pool
+pool_size: 5
+pool_pre_ping: true        # Verbindung vor Nutzung prüfen
+pool_recycle: 3600         # Verbindung nach 1h erneuern
+connect_timeout: 10        # Sekunden

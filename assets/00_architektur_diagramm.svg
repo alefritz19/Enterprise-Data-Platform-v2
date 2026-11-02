@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 340" width="100%" height="auto">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; rx: 12px; stroke: #30363d; stroke-width: 1.5; }
+      .stage-box { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 10px; }
+      .node-blue { fill: #1e293b; stroke: #3b82f6; stroke-width: 1.8; rx: 8px; }
+      .node-teal { fill: #0f292a; stroke: #14b8a6; stroke-width: 1.8; rx: 8px; }
+      .node-purple { fill: #1e1b38; stroke: #8b5cf6; stroke-width: 1.8; rx: 8px; }
+      .node-green { fill: #062c22; stroke: #10b981; stroke-width: 1.8; rx: 8px; }
+      .stage-title { fill: #8b949e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.8px; }
+      .title { fill: #f0f6fc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .sub { fill: #8b949e; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11px; text-anchor: middle; }
+      .arrow { stroke: #58a6ff; stroke-width: 2; fill: none; marker-end: url(#arrow-head); }
+      .arrow-dashed { stroke: #8b949e; stroke-width: 1.6; stroke-dasharray: 5,4; fill: none; marker-end: url(#arrow-head-gray); }
+    </style>
+    <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-head-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#8b949e"/>
+    </marker>
+  </defs>
+
+  <!-- Main Background -->
+  <rect class="bg" x="2" y="2" width="1116" height="336"/>
+
+  <!-- STAGE 1: EXTRACT -->
+  <rect class="stage-box" x="24" y="24" width="220" height="292"/>
+  <text class="stage-title" x="40" y="48">1. EXTRACT (INGEST)</text>
+
+  <rect class="node-blue" x="42" y="75" width="184" height="68"/>
+  <text class="title" x="134" y="102">CSV-Rohdaten</text>
+  <text class="sub" x="134" y="122">data/raw/*.csv (365 Tage)</text>
+
+  <rect class="node-blue" x="42" y="195" width="184" height="68"/>
+  <text class="title" x="134" y="222">CSVExtractor</text>
+  <text class="sub" x="134" y="242">Encoding &amp; Schema-Check</text>
+
+  <path class="arrow" d="M 134 143 L 134 189"/>
+
+  <!-- STAGE 2: TRANSFORM -->
+  <rect class="stage-box" x="274" y="24" width="236" height="292"/>
+  <text class="stage-title" x="290" y="48">2. TRANSFORM (CLEANING)</text>
+
+  <rect class="node-teal" x="292" y="75" width="200" height="68"/>
+  <text class="title" x="392" y="102">DatenReiniger</text>
+  <text class="sub" x="392" y="122">DE-Datum &amp; EUR-Normierung</text>
+
+  <rect class="node-teal" x="292" y="195" width="200" height="68"/>
+  <text class="title" x="392" y="222">SHA-256 Deduplizierung</text>
+  <text class="sub" x="392" y="242">Pflichtfelder &amp; Hash-Filter</text>
+
+  <path class="arrow" d="M 392 143 L 392 189"/>
+  <path class="arrow" d="M 226 229 L 260 229 L 260 109 L 286 109"/>
+
+  <!-- STAGE 3: POSTGRESQL DWH -->
+  <rect class="stage-box" x="540" y="24" width="268" height="292"/>
+  <text class="stage-title" x="556" y="48">3. LOAD (POSTGRESQL 16 DWH)</text>
+
+  <rect class="node-purple" x="560" y="64" width="228" height="50"/>
+  <text class="title" x="674" y="86">raw.sales_import</text>
+  <text class="sub" x="674" y="103">Unveränderte Originaldaten</text>
+
+  <rect class="node-purple" x="560" y="128" width="228" height="50"/>
+  <text class="title" x="674" y="150">staging.sales_clean</text>
+  <text class="sub" x="674" y="167">Validierte Transaktionen (1.720)</text>
+
+  <rect class="node-purple" x="560" y="192" width="228" height="50"/>
+  <text class="title" x="674" y="214">mart.sales_daily</text>
+  <text class="sub" x="674" y="231">Aggregierte Tagesumsätze</text>
+
+  <rect class="node-purple" x="560" y="254" width="228" height="48"/>
+  <text class="title" x="674" y="275">mart.sales_prognose</text>
+  <text class="sub" x="674" y="292">30-Tage-Vorhersage &amp; metadata</text>
+
+  <path class="arrow-dashed" d="M 226 215 L 522 215 L 522 89 L 554 89"/>
+  <path class="arrow" d="M 492 229 L 528 229 L 528 153 L 554 153"/>
+  <path class="arrow" d="M 674 178 L 674 188"/>
+
+  <!-- STAGE 4: ML & BI -->
+  <rect class="stage-box" x="838" y="24" width="258" height="292"/>
+  <text class="stage-title" x="854" y="48">4. ML FORECAST &amp; DASHBOARD</text>
+
+  <rect class="node-green" x="856" y="75" width="222" height="84"/>
+  <text class="title" x="967" y="102">XGBoost (80/20 Split)</text>
+  <text class="sub" x="967" y="121">MAPE: 2,05 % vs. 11,90 % Baseline</text>
+  <text class="sub" x="967" y="139">+ IQR-Ausreißererkennung</text>
+
+  <rect class="node-green" x="856" y="195" width="222" height="84"/>
+  <text class="title" x="967" y="222">Streamlit &amp; Plotly BI</text>
+  <text class="sub" x="967" y="241">Port 8501 · systemd Service</text>
+  <text class="sub" x="967" y="259">Admin-PIN Schreibschutz</text>
+
+  <path class="arrow" d="M 788 153 L 822 153 L 822 117 L 850 117"/>
+  <path class="arrow" d="M 856 135 L 828 135 L 828 278 L 794 278"/>
+  <path class="arrow" d="M 788 217 L 850 217"/>
+  <path class="arrow" d="M 788 265 L 850 250"/>
+</svg>

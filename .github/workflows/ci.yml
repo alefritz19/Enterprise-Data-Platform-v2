@@ -1,0 +1,30 @@
+name: Python CI & Code Quality
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint-and-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile all Python modules (Syntax Check)
+        run: |
+          python -m py_compile orchestrator.py dashboard.py generate_test_data.py src/baseline.py
+          find src -name "*.py" -exec python -m py_compile {} +
+
+      - name: Install Pylint
+        run: pip install pylint
+
+      - name: Run Pylint (Errors & Fatal checks)
+        run: pylint --errors-only --disable=import-error orchestrator.py dashboard.py generate_test_data.py src/

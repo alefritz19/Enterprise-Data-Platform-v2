@@ -1,0 +1,30 @@
+# Umgebungsvariablen & Geheimnisse (NIEMALS committen!)
+.env
+*.key
+*.pem
+
+# Python Bytecode & Virtuelle Umgebungen
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Logs & Arbeitsverzeichnisse
+logs/*
+!logs/.gitkeep
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/errors/*
+!data/errors/.gitkeep
+power_bi_export/*
+!power_bi_export/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
